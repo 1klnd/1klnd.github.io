@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>正则表达式 - 饱食终日，无所事事</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="饱食终日，无所事事"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="饱食终日，无所事事"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta description="正则表达式（Regular Expression，缩写为 regex 或者 regexp）是一组特殊文本，可以用来从文本中找出满足你想要的格式的部分。From learn regex the easy way 12&amp;quot;the&amp;quot; &amp;#x3D;&amp;gt; the fat cat sat on the mat.the  表示使用正则表达式 “the”（第一行） 可以匹配到字符串 “the fat"><meta property="og:type" content="blog"><meta property="og:title" content="正则表达式"><meta property="og:url" content="http://example.com/2019/10/07/regularexpression/"><meta property="og:site_name" content="饱食终日，无所事事"><meta property="og:description" content="正则表达式（Regular Expression，缩写为 regex 或者 regexp）是一组特殊文本，可以用来从文本中找出满足你想要的格式的部分。From learn regex the easy way 12&amp;quot;the&amp;quot; &amp;#x3D;&amp;gt; the fat cat sat on the mat.the  表示使用正则表达式 “the”（第一行） 可以匹配到字符串 “the fat"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:published_time" content="2019-10-07T13:11:26.000Z"><meta property="article:modified_time" content="2019-10-10T10:18:51.967Z"><meta property="article:author" content="lll"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2019/10/07/regularexpression/"},"headline":"饱食终日，无所事事","image":["http://example.com/img/og_image.png"],"datePublished":"2019-10-07T13:11:26.000Z","dateModified":"2019-10-10T10:18:51.967Z","author":{"@type":"Person","name":"lll"},"description":"正则表达式（Regular Expression，缩写为 regex 或者 regexp）是一组特殊文本，可以用来从文本中找出满足你想要的格式的部分。From learn regex the easy way 12&quot;the&quot; &#x3D;&gt; the fat cat sat on the mat.the  表示使用正则表达式 “the”（第一行） 可以匹配到字符串 “the fat"}</script><link rel="canonical" href="http://example.com/2019/10/07/regularexpression/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.2.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="饱食终日，无所事事" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-10-07T13:11:26.000Z" title="2019-10-07T13:11:26.000Z">2019-10-07</time>发表</span><span class="level-item"><time dateTime="2019-10-10T10:18:51.967Z" title="2019-10-10T10:18:51.967Z">2019-10-10</time>更新</span><span class="level-item">15 分钟读完 (大约2217个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">正则表达式</h1><div class="content"><p>正则表达式（Regular Expression，缩写为 regex 或者 regexp）是一组特殊文本，可以用来从文本中找出满足你想要的格式的部分。From <a target="_blank" rel="noopener" href="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md">learn regex the easy way</a></p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;the&quot;</span> =&gt; <span class="keyword">the</span> fat cat sat <span class="keyword">on</span> <span class="title">the</span> <span class="title">mat</span>.</span><br><span class="line"><span class="keyword">the</span></span><br></pre></td></tr></table></figure>
+
+<p>表示使用正则表达式 “the”（第一行） 可以匹配到字符串 “the fat cat sat on the mat” 中的 “the”（第二行）</p>
+<a id="more"></a>
+
+<h2 id="基本匹配"><a href="#基本匹配" class="headerlink" title="基本匹配"></a>基本匹配</h2><p>正则表达式其实就是执行搜素时的格式，大小写敏感。<code>The</code>表示一个规则，T紧接着h然后是e。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;The&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>正则表达式主要依赖于元字符，元字符不代表他们的字面意思，具有特殊含义：</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.</td>
+<td>匹配任意单个字符，除了换行符</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>匹配方括号内的任意字符</td>
+</tr>
+<tr>
+<td>[^]</td>
+<td>匹配方括号内容以外的任意字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配任意个（包括0个）*之前的字符</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配至少一个+前的字符</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配0个或者1个?之前的字符</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>匹配大于等于n，小于等于m个大括号前的字符</td>
+</tr>
+<tr>
+<td>(xyz)</td>
+<td>匹配与xyz完全相同的字符串</td>
+</tr>
+<tr>
+<td>|</td>
+<td>或运算符，匹配该符号前或者后的字符</td>
+</tr>
+<tr>
+<td>\</td>
+<td>转义字符，用于匹配一些保留字符</td>
+</tr>
+<tr>
+<td>^</td>
+<td>从前开始匹配</td>
+</tr>
+<tr>
+<td>$</td>
+<td>从后开始匹配</td>
+</tr>
+</tbody></table>
+<h3 id="点"><a href="#点" class="headerlink" title="点."></a>点<code>.</code></h3><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;.ar&quot;</span> =&gt; <span class="keyword">the</span> car parked <span class="keyword">in</span> <span class="keyword">the</span> garage</span><br><span class="line">car, par, gar</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h3><h4 id="字符集-1"><a href="#字符集-1" class="headerlink" title="字符集[]"></a>字符集<code>[]</code></h4><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;[Tt]he&quot;</span> =&gt; The car parked <span class="keyword">in</span> <span class="keyword">the</span> garage.</span><br><span class="line">The, <span class="keyword">the</span></span><br></pre></td></tr></table></figure>
+
+<p>另外，方括号内的<code>.</code>就表示它本身</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;ar[.]&quot;</span> =&gt; A garage is <span class="keyword">a</span> good place <span class="built_in">to</span> park <span class="keyword">a</span> car.</span><br><span class="line">ar.</span><br></pre></td></tr></table></figure>
+
+<h4 id="否定字符集"><a href="#否定字符集" class="headerlink" title="否定字符集[^]"></a>否定字符集<code>[^]</code></h4><p>一般说来<code>^</code>表示一个字符串的开头，但放在方括号内的开头时，表示这个字符集时否定的</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;[^c]ar&quot;</span> =&gt; The car parked in the garage.</span><br><span class="line"><span class="built_in">par,</span> gar</span><br></pre></td></tr></table></figure>
+
+<h3 id="重复次数"><a href="#重复次数" class="headerlink" title="重复次数"></a>重复次数</h3><h4 id="号"><a href="#号" class="headerlink" title="*号"></a><code>*</code>号</h4><p>匹配在<code>*</code>之前的字符大于等于0次。表达式<code>[a-z]*</code>匹配所有以小写字母开头的字符串。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;[a-z]*&quot;</span> =&gt; The car parked <span class="keyword">in</span> <span class="keyword">the</span> garage <span class="comment">#21.</span></span><br><span class="line">he, car, parked, <span class="keyword">in</span>, <span class="keyword">the</span>, garage</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>.*</code>可以匹配所有的字符串，<code>\s*cat\s*</code>匹配以任意个空格开头，任意个空格结尾的<code>cat</code></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;\s*cat\s*&quot;</span> =&gt; The fat <span class="keyword">cat</span> <span class="keyword">set</span> <span class="keyword">on</span> the concatenation.</span><br><span class="line"><span class="keyword">cat</span>, <span class="keyword">cat</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="号-1"><a href="#号-1" class="headerlink" title="+号"></a><code>+</code>号</h4><p>匹配<code>+</code>号之前的字符出现至少一次</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;c.+t&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br><span class="line"><span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="号-2"><a href="#号-2" class="headerlink" title="?号"></a><code>?</code>号</h4><p>匹配<code>?</code>号之前的字符出现0次或1次</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;[T]?he&quot;</span> =&gt; The car <span class="keyword">is</span> parked <span class="keyword">in</span> the garage.</span><br><span class="line">The, he</span><br></pre></td></tr></table></figure>
+
+<h4 id=""><a href="#" class="headerlink" title="{}"></a><code>&#123;&#125;</code></h4><p>控制一个或一组字符可出现的次数，<code>&#123;m,n&#125;</code>表示出现大于等于m小于等于n次。可以省略第二个参数，此时表示出现大于等于m次。<code>&#123;m&#125;</code>表示固定出现m次。</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;[0-9]&#123;2,3&#125;&quot;</span> =&gt; The number was <span class="number">9.9997</span> but we rounded <span class="literal">it</span> <span class="literal">off</span> <span class="keyword">to</span> <span class="number">10.0</span>.</span><br><span class="line"><span class="number">999</span>, <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;[0-9]&#123;3&#125;&quot;</span> =&gt; The number was <span class="number">9.9997</span> but we rounded <span class="literal">it</span> <span class="literal">off</span> <span class="keyword">to</span> <span class="number">10.0</span>.</span><br><span class="line"><span class="number">999</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="子模式"><a href="#子模式" class="headerlink" title="()子模式"></a><code>()</code>子模式</h3><p>括号内的内容表示一个子模式，其中可以使用|运算符</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="string">&quot;(c|g|p)ar&quot;</span> =&gt; The car <span class="keyword">is</span> parked <span class="keyword">in</span> the garage.</span><br><span class="line">car, par, gar</span><br></pre></td></tr></table></figure>
+
+<h3 id="或运算符"><a href="#或运算符" class="headerlink" title="|或运算符"></a><code>|</code>或运算符</h3><p>匹配之前或者之后的内容</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;(T|t)he|car&quot;</span> =&gt; The car <span class="keyword">is</span> parked <span class="keyword">in</span> the garage.</span><br><span class="line">The, car, the</span><br></pre></td></tr></table></figure>
+
+<h3 id="转码特殊字符"><a href="#转码特殊字符" class="headerlink" title="\转码特殊字符"></a><code>\</code>转码特殊字符</h3><p>反斜杠<code>\</code>用于转码紧跟其后的字符，用于指定<code>&#123;&#125;[]/\+*.$^|?</code>这些特殊字符。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;(f|c|m)at\.?&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br><span class="line">fat, <span class="keyword">cat</span>, <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<h3 id="锚点"><a href="#锚点" class="headerlink" title="锚点"></a>锚点</h3><h4 id="号-3"><a href="#号-3" class="headerlink" title="^号"></a><code>^</code>号</h4><p>仅正则表达式在所匹配字符串的开头时才进行匹配。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;^(T|t)the&quot;</span> =&gt; The car <span class="keyword">is</span> parked <span class="keyword">in</span> the garage.</span><br><span class="line">The</span><br></pre></td></tr></table></figure>
+
+<h4 id="号-4"><a href="#号-4" class="headerlink" title="$号"></a><code>$</code>号</h4><p>同理于<code>^</code>，<code>$</code>仅正则表达式在所匹配字符串结尾时进行匹配。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;(at)\.$&quot;</span> =&gt; The fat cat. sat. <span class="keyword">on</span> <span class="title">the</span> <span class="title">mat</span>.</span><br><span class="line"><span class="keyword">at</span>.</span><br></pre></td></tr></table></figure>
+
+<h2 id="简写字符集"><a href="#简写字符集" class="headerlink" title="简写字符集"></a>简写字符集</h2><table>
+<thead>
+<tr>
+<th>简写</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.</td>
+<td>除换行符外的所有字符</td>
+</tr>
+<tr>
+<td>\w</td>
+<td>匹配所有字母数字下划线，等同于<code>[a-zA-z0-9_]</code></td>
+</tr>
+<tr>
+<td>\W</td>
+<td>匹配所有非字母数字，等同于<code>[^\w]</code></td>
+</tr>
+<tr>
+<td>\d</td>
+<td>匹配数字,<code>[0-9]</code></td>
+</tr>
+<tr>
+<td>\D</td>
+<td>匹配非数字</td>
+</tr>
+<tr>
+<td>\s</td>
+<td>匹配所有空格字符，<code>[\t\n\f\r\p&#123;Z&#125;]</code></td>
+</tr>
+<tr>
+<td>\S</td>
+<td>匹配所有非空格字符</td>
+</tr>
+<tr>
+<td>\f</td>
+<td>换页符</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行符</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车符</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>制表符</td>
+</tr>
+<tr>
+<td>\v</td>
+<td>垂直制表符</td>
+</tr>
+<tr>
+<td>\p</td>
+<td>CR/LF，等同于<code>\r\n</code>，匹配DOS行终止符</td>
+</tr>
+</tbody></table>
+<h2 id="零宽度断言（前后预查）–-未学习"><a href="#零宽度断言（前后预查）–-未学习" class="headerlink" title="零宽度断言（前后预查）– 未学习"></a>零宽度断言（前后预查）– 未学习</h2><p>先行断言和后发断言都属于<strong>非捕获簇</strong>(不捕获文本 ，也不针对组合计进行计数). 先行断言用于判断所匹配的格式是否在另一个确定的格式之前, 匹配结果不包含该确定格式(仅作为约束).</p>
+<p>例如, 我们想要获得所有跟在 <code>$</code> 符号后的数字, 我们可以使用正后发断言 <code>(?&lt;=\$)[0-9\.]*</code>. 这个表达式匹配 <code>$</code> 开头, 之后跟着 <code>0,1,2,3,4,5,6,7,8,9,.</code> 这些字符可以出现大于等于 0 次.</p>
+<p>零宽度断言如下:</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>?=</td>
+<td>正先行断言-存在</td>
+</tr>
+<tr>
+<td>?!</td>
+<td>负先行断言-排除</td>
+</tr>
+<tr>
+<td>?&lt;=</td>
+<td>正后发断言-存在</td>
+</tr>
+<tr>
+<td>?&lt;!</td>
+<td>负后发断言-排除</td>
+</tr>
+</tbody></table>
+<h3 id="正先行断言"><a href="#正先行断言" class="headerlink" title="?=... 正先行断言"></a><code>?=...</code> 正先行断言</h3><p><code>?=...</code> 正先行断言, 表示第一部分表达式之后必须跟着 <code>?=...</code>定义的表达式.</p>
+<p>返回结果只包含满足匹配条件的第一部分表达式. 定义一个正先行断言要使用 <code>()</code>. 在括号内部使用一个问号和等号: <code>(?=...)</code>.</p>
+<p>正先行断言的内容写在括号中的等号后面. 例如, 表达式 <code>(T|t)he(?=\sfat)</code> 匹配 <code>The</code> 和 <code>the</code>, 在括号中我们又定义了正先行断言 <code>(?=\sfat)</code> ,即 <code>The</code> 和 <code>the</code> 后面紧跟着 <code>(空格)fat</code>.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;(T|t)he(?=\sfat)&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/IDDARt/1">在线练习</a></p>
+<h3 id="负先行断言"><a href="#负先行断言" class="headerlink" title="?!... 负先行断言"></a><code>?!...</code> 负先行断言</h3><p>负先行断言 <code>?!</code> 用于筛选所有匹配结果, 筛选条件为 其后不跟随着断言中定义的格式. <code>正先行断言</code>  定义和 <code>负先行断言</code> 一样, 区别就是 <code>=</code> 替换成 <code>!</code> 也就是 <code>(?!...)</code>.</p>
+<p>表达式 <code>(T|t)he(?!\sfat)</code> 匹配 <code>The</code> 和 <code>the</code>, 且其后不跟着 <code>(空格)fat</code>.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;(T|t)he(?!\sfat)&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/V32Npg/1">在线练习</a></p>
+<h3 id="lt-正后发断言"><a href="#lt-正后发断言" class="headerlink" title="?&lt;= ... 正后发断言"></a><code>?&lt;= ...</code> 正后发断言</h3><p>正后发断言 记作<code>(?&lt;=...)</code> 用于筛选所有匹配结果, 筛选条件为 其前跟随着断言中定义的格式. 例如, 表达式 <code>(?&lt;=(T|t)he\s)(fat|mat)</code> 匹配 <code>fat</code> 和 <code>mat</code>, 且其前跟着 <code>The</code> 或 <code>the</code>.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;(?&lt;=(T|t)he\s)(fat|mat)&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/avH165/1">在线练习</a></p>
+<h3 id="lt-负后发断言"><a href="#lt-负后发断言" class="headerlink" title="?&lt;!... 负后发断言"></a><code>?&lt;!...</code> 负后发断言</h3><p>负后发断言 记作 <code>(?&lt;!...)</code> 用于筛选所有匹配结果, 筛选条件为 其前不跟随着断言中定义的格式. 例如, 表达式 <code>(?&lt;!(T|t)he\s)(cat)</code> 匹配 <code>cat</code>, 且其前不跟着 <code>The</code> 或 <code>the</code>.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;(?&lt;!(T|t)he\s)(cat)&quot;</span> =&gt; The <span class="keyword">cat</span> sat <span class="keyword">on</span> <span class="keyword">cat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/8Efx5G/1">在线练习</a></p>
+<h2 id="标志"><a href="#标志" class="headerlink" title="标志"></a>标志</h2><p>标志也叫模式修正符, 因为它可以用来修改表达式的搜索结果. 这些标志可以任意的组合使用, 它也是整个正则表达式的一部分.</p>
+<table>
+<thead>
+<tr>
+<th>标志</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i</td>
+<td>忽略大小写.</td>
+</tr>
+<tr>
+<td>g</td>
+<td>全局搜索.</td>
+</tr>
+<tr>
+<td>m</td>
+<td>多行的: 锚点元字符 <code>^</code> <code>$</code> 工作范围在每行的起始.</td>
+</tr>
+</tbody></table>
+<h3 id="忽略大小写-Case-Insensitive"><a href="#忽略大小写-Case-Insensitive" class="headerlink" title="忽略大小写 (Case Insensitive)"></a>忽略大小写 (Case Insensitive)</h3><p>修饰语 <code>i</code> 用于忽略大小写. 例如, 表达式 <code>/The/gi</code> 表示在全局搜索 <code>The</code>, 在后面的 <code>i</code> 将其条件修改为忽略大小写, 则变成搜索 <code>the</code> 和 <code>The</code>, <code>g</code> 表示全局搜索.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;The&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/dpQyf9/1">在线练习</a></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;/The/gi&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/ahfiuh/1">在线练习</a></p>
+<h3 id="全局搜索-Global-search"><a href="#全局搜索-Global-search" class="headerlink" title="全局搜索 (Global search)"></a>全局搜索 (Global search)</h3><p>修饰符 <code>g</code> 常用于执行一个全局搜索匹配, 即(不仅仅返回第一个匹配的, 而是返回全部). 例如, 表达式 <code>/.(at)/g</code> 表示搜索 任意字符(除了换行) + <code>at</code>, 并返回全部结果.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;/.(at)/&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/jnk6gM/1">在线练习</a></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;/.(at)/g&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/dO1nef/1">在线练习</a></p>
+<h3 id="多行修饰符-Multiline"><a href="#多行修饰符-Multiline" class="headerlink" title="多行修饰符 (Multiline)"></a>多行修饰符 (Multiline)</h3><p>多行修饰符 <code>m</code> 常用于执行一个多行匹配.</p>
+<p>像之前介绍的 <code>(^,$)</code> 用于检查格式是否是在待检测字符串的开头或结尾. 但我们如果想要它在每行的开头和结尾生效, 我们需要用到多行修饰符 <code>m</code>.</p>
+<p>例如, 表达式 <code>/at(.)?$/gm</code> 表示小写字符 <code>a</code> 后跟小写字符 <code>t</code> , 末尾可选除换行符外任意字符. 根据 <code>m</code> 修饰符, 现在表达式匹配每行的结尾.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;/.at(.)?$/&quot;</span> =&gt; The fat</span><br><span class="line">                <span class="keyword">cat</span> sat</span><br><span class="line">                <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/hoGMkP/1">在线练习</a></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;/.at(.)?$/gm&quot;</span> =&gt; The fat</span><br><span class="line">                  <span class="keyword">cat</span> sat</span><br><span class="line">                  <span class="keyword">on</span> the <span class="keyword">mat</span>.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/E88WE2/1">在线练习</a></p>
+<h3 id="贪婪匹配与惰性匹配-Greedy-vs-lazy-matching"><a href="#贪婪匹配与惰性匹配-Greedy-vs-lazy-matching" class="headerlink" title="贪婪匹配与惰性匹配 (Greedy vs lazy matching)"></a>贪婪匹配与惰性匹配 (Greedy vs lazy matching)</h3><p>正则表达式默认采用贪婪匹配模式，在该模式下意味着会匹配尽可能长的子串。我们可以使用 <code>?</code> 将贪婪匹配模式转化为惰性匹配模式。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;/(.*at)/&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>. </span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/AyAdgJ/1">在线练习</a></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;/(.*?at)/&quot;</span> =&gt; The fat <span class="keyword">cat</span> sat <span class="keyword">on</span> the <span class="keyword">mat</span>. </span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/AyAdgJ/2">在线练习</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>正则表达式</p><p><a href="http://example.com/2019/10/07/regularexpression/">http://example.com/2019/10/07/regularexpression/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>lll</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-10-07</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2019-10-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2019/10/07/tools/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">常用逆向工具快捷键</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2019/10/06/todolist/"><span class="level-item">Todo List</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="lll"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">lll</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">42</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">13</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/1klnd" target="_blank" rel="noopener">关注我</a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#基本匹配"><span class="level-left"><span class="level-item">1</span><span class="level-item">基本匹配</span></span></a></li><li><a class="level is-mobile" href="#元字符"><span class="level-left"><span class="level-item">2</span><span class="level-item">元字符</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#概述"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">概述</span></span></a></li><li><a class="level is-mobile" href="#点"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">点.</span></span></a></li><li><a class="level is-mobile" href="#字符集"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">字符集</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#字符集-1"><span class="level-left"><span class="level-item">2.3.1</span><span class="level-item">字符集[]</span></span></a></li><li><a class="level is-mobile" href="#否定字符集"><span class="level-left"><span class="level-item">2.3.2</span><span class="level-item">否定字符集[^]</span></span></a></li></ul></li><li><a class="level is-mobile" href="#重复次数"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">重复次数</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#号"><span class="level-left"><span class="level-item">2.4.1</span><span class="level-item">*号</span></span></a></li><li><a class="level is-mobile" href="#号-1"><span class="level-left"><span class="level-item">2.4.2</span><span class="level-item">+号</span></span></a></li><li><a class="level is-mobile" href="#号-2"><span class="level-left"><span class="level-item">2.4.3</span><span class="level-item">?号</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">2.4.4</span><span class="level-item">&amp;#123;&amp;#125;</span></span></a></li></ul></li><li><a class="level is-mobile" href="#子模式"><span class="level-left"><span class="level-item">2.5</span><span class="level-item">()子模式</span></span></a></li><li><a class="level is-mobile" href="#或运算符"><span class="level-left"><span class="level-item">2.6</span><span class="level-item">|或运算符</span></span></a></li><li><a class="level is-mobile" href="#转码特殊字符"><span class="level-left"><span class="level-item">2.7</span><span class="level-item">\转码特殊字符</span></span></a></li><li><a class="level is-mobile" href="#锚点"><span class="level-left"><span class="level-item">2.8</span><span class="level-item">锚点</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#号-3"><span class="level-left"><span class="level-item">2.8.1</span><span class="level-item">^号</span></span></a></li><li><a class="level is-mobile" href="#号-4"><span class="level-left"><span class="level-item">2.8.2</span><span class="level-item">$号</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#简写字符集"><span class="level-left"><span class="level-item">3</span><span class="level-item">简写字符集</span></span></a></li><li><a class="level is-mobile" href="#零宽度断言（前后预查）–-未学习"><span class="level-left"><span class="level-item">4</span><span class="level-item">零宽度断言（前后预查）– 未学习</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#正先行断言"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">?=... 正先行断言</span></span></a></li><li><a class="level is-mobile" href="#负先行断言"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">?!... 负先行断言</span></span></a></li><li><a class="level is-mobile" href="#lt-正后发断言"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">?&lt;= ... 正后发断言</span></span></a></li><li><a class="level is-mobile" href="#lt-负后发断言"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">?&lt;!... 负后发断言</span></span></a></li></ul></li><li><a class="level is-mobile" href="#标志"><span class="level-left"><span class="level-item">5</span><span class="level-item">标志</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#忽略大小写-Case-Insensitive"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">忽略大小写 (Case Insensitive)</span></span></a></li><li><a class="level is-mobile" href="#全局搜索-Global-search"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">全局搜索 (Global search)</span></span></a></li><li><a class="level is-mobile" href="#多行修饰符-Multiline"><span class="level-left"><span class="level-item">5.3</span><span class="level-item">多行修饰符 (Multiline)</span></span></a></li><li><a class="level is-mobile" href="#贪婪匹配与惰性匹配-Greedy-vs-lazy-matching"><span class="level-left"><span class="level-item">5.4</span><span class="level-item">贪婪匹配与惰性匹配 (Greedy vs lazy matching)</span></span></a></li></ul></li></ul></div></div><style>.menu-list > li > a.is-active + .menu-list { display: block; }.menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/AI/"><span class="level-start"><span class="level-item">AI</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/CTF/"><span class="level-start"><span class="level-item">CTF</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Powershell/"><span class="level-start"><span class="level-item">Powershell</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/metasploit/"><span class="level-start"><span class="level-item">metasploit</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/notes/"><span class="level-start"><span class="level-item">notes</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/python/"><span class="level-start"><span class="level-item">python</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/vulnhub/"><span class="level-start"><span class="level-item">vulnhub</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/"><span class="level-start"><span class="level-item">漏洞复现</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-10-04T08:35:56.000Z">2020-10-04</time></p><p class="title"><a href="/2020/10/04/java/">Java 笔记</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-10-03T07:52:45.000Z">2020-10-03</time></p><p class="title"><a href="/2020/10/03/gopher/">Gopher 协议利用</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-08-21T02:09:13.000Z">2020-08-21</time></p><p class="title"><a href="/2020/08/21/node-js/">Node.js 相关</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-08-06T02:02:51.000Z">2020-08-06</time></p><p class="title"><a href="/2020/08/06/docker/">Docker</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-08-04T07:40:44.000Z">2020-08-04</time></p><p class="title"><a href="/2020/08/04/network/">计算机网络</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/10/"><span class="level-start"><span class="level-item">十月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/08/"><span class="level-start"><span class="level-item">八月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/07/"><span class="level-start"><span class="level-item">七月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/06/"><span class="level-start"><span class="level-item">六月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/05/"><span class="level-start"><span class="level-item">五月 2020</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/03/"><span class="level-start"><span class="level-item">三月 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/02/"><span class="level-start"><span class="level-item">二月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/01/"><span class="level-start"><span class="level-item">一月 2020</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/11/"><span class="level-start"><span class="level-item">十一月 2019</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/10/"><span class="level-start"><span class="level-item">十月 2019</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/09/"><span class="level-start"><span class="level-item">九月 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/AI/"><span class="tag">AI</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CTF/"><span class="tag">CTF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Powershell/"><span class="tag">Powershell</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Writeup/"><span class="tag">Writeup</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flask/"><span class="tag">flask</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/metasploit/"><span class="tag">metasploit</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/python/"><span class="tag">python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/shell/"><span class="tag">shell</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ssr/"><span class="tag">ssr</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tables/"><span class="tag">tables</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tricks/"><span class="tag">tricks</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/vulnhub/"><span class="tag">vulnhub</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"><span class="tag">渗透测试</span><span class="tag">3</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="饱食终日，无所事事" height="28"></a><p class="is-size-7"><span>&copy; 2020 lll</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" async></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
